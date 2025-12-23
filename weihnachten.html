@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frohe Weihnachten 🎄</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(#0b1d3a, #1e3c72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2rem;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 40px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ❄ Schnee */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    /* 🎆 Feuerwerk */
+    .firework {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: transparent;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .spark {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 12px currentColor;
+      animation: explode 1.4s ease-out forwards;
+    }
+
+    @keyframes explode {
+      from {
+        transform: translate(0,0);
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--x), var(--y)) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🎄 Frohe Weihnachten 🎄</h1>
+    <p>
+      Liebe <strong>Annabell</strong> ❤️<br><br>
+      Ich wünsche dir wundervolle Feiertage<br>
+      voller Wärme, Freude und schöner Momente ✨
+    </p>
+    <p style="margin-top: 1.5rem; font-style: italic; opacity: 0.9;">
+      - Leon
+    </p>
+  </div>
+
+  <script>
+    /* ❄ Schnee */
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.textContent = "❄";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = 3 + Math.random() * 5 + "s";
+      snowflake.style.opacity = Math.random();
+      snowflake.style.fontSize = 10 + Math.random() * 20 + "px";
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => snowflake.remove(), 8000);
+    }
+
+    setInterval(createSnowflake, 200);
+
+    /* 🎆 Feuerwerk */
+    function createFirework() {
+      const firework = document.createElement("div");
+      firework.className = "firework";
+
+      const x = Math.random() * 80 + 10;
+      const y = Math.random() * 40 + 10;
+      firework.style.left = x + "vw";
+      firework.style.top = y + "vh";
+
+      const colors = ["#ff4d4d", "#ffd700", "#4dd2ff", "#b84dff"];
+      firework.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+      const sparks = 24;
+
+      for (let i = 0; i < sparks; i++) {
+        const spark = document.createElement("div");
+        spark.className = "spark";
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 120 + 40; // Explosion radius
+        spark.style.setProperty("--x", Math.cos(angle) * distance + "px");
+        spark.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+        firework.appendChild(spark);
+      }
+
+      document.body.appendChild(firework);
+
+      setTimeout(() => firework.remove(), 1500);
+    }
+
+    setInterval(createFirework, 3500);
+  </script>
+
+</body>
+</html>
